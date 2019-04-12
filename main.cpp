@@ -2,11 +2,8 @@
 #include <iostream>
 #include "Editor.h"
 
-
-
-Editor::Editor(){
-	Document();
-}
-
-Editor::loop(){
+int main() {
+	Editor();
+	loop();
+	return 0;
 }
