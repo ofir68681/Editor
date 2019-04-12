@@ -4,6 +4,6 @@
 
 int main() {
 	Editor();
-	loop();
+	loop(//gets a file as an input, processes it to a vector in Document class);
 	return 0;
 }
