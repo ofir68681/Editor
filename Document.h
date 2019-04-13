@@ -10,9 +10,11 @@ class Document{
 	int currentLine;
 	bool addForward;
 	bool addBackward;
-	bool inRange(int index);
+	bool replace(std::string& str, const std::string& from, const std::string& to);
 	
 	public:
+	Document();
+	
 	void text(string text);
 	void p();
 	void prec_p();
@@ -24,9 +26,8 @@ class Document{
 	void c();
 	void slesh_text(string text);
 	void s_slech_old_new(string oldText, string newText);
-	bool replace(std::string& str, const std::string& from, const std::string& to);
 	
-	Document();
+	
 
 
 };

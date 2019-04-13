@@ -6,7 +6,7 @@
 using namespace std;
 Document::Document(){
 	currentLine = 0;
-	//addForward = true;
+	addForward = false;
 }
 
 void Document::text(string text){
@@ -69,12 +69,7 @@ void Document::num(int number){
 	}
 	cout << lines[currentLine-1] << endl;
 }
-	
-bool Document::inRange(int index){
-	if(index < 0) return false;
-	if(index >= lines.size()) return false;
-	return true;
-}
+
 
 void Document::slesh_text(string text){
 	bool ok = false;
@@ -101,6 +96,11 @@ void Document::slesh_text(string text){
 	}
 }
 
+void Document::s_slech_old_new(string oldText, string newText){
+	replace(lines[currentLine-1], oldText, newText);
+}
+
+//replace 'from' in str into 'to'
 bool Document::replace(string& str, const string& from, const string& to) {
     size_t start_pos = str.find(from);
     if(start_pos == std::string::npos)
@@ -109,9 +109,7 @@ bool Document::replace(string& str, const string& from, const string& to) {
     return true;
 }
 	
-void Document::s_slech_old_new(string oldText, string newText){
-	replace(lines[currentLine-1], oldText, newText);
-}
+
 	
 	
 	

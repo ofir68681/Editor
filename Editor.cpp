@@ -25,17 +25,24 @@ void Editor::loop(){
 	string a;
 	while(1){
 		getline(cin, a);
-		//cout << a;
 		if (!a.compare("Q"))
 			break;
-		
 		handle(a);
 	}
 }
 
+//handle a text line from the user
 void Editor::handle(string line){
-	//cout << "handle: " << line << endl;
-	//choose which document function to call
+	
+	//in case of 'a', 'i' or 'c', call "text" function, until '.' recived.
+	static bool waitForDot = false;
+	if(waitForDot){
+		document.text(line);
+		if(!line.compare("."))
+			waitForDot = false;
+		return;
+	}
+	
 	if(!line.compare("p")){
 		document.p();
 		return;
@@ -49,14 +56,17 @@ void Editor::handle(string line){
 		return;
 	}
 	if(!line.compare("a")){
+		waitForDot = true;
 		document.a();
 		return;
 	}
 	if(!line.compare("i")){
 		document.i();
+		waitForDot = true;
 		return;
 	}
 	if(!line.compare("c")){
+		waitForDot = true;
 		document.c();
 		return;
 	}
@@ -65,6 +75,7 @@ void Editor::handle(string line){
 		return;
 	}
 	
+	//check if the text is a number
 	int num = 0;
 	bool isAnumber;
 	string s = line;
@@ -78,40 +89,40 @@ void Editor::handle(string line){
 	catch (std::out_of_range const &e){
 		isAnumber=false;
 	}
-
 	if(isAnumber){
 		document.num(num);
 		return;
 	}
 	
-	//check if line is a "/dir"
+	//empty text
 	if(line.size()==0){
 		document.text(line);
 		return;
-		}
+	}
 	
+	// '/text'
 	if(line.at(0) == '/'){
 		document.slesh_text(split(line, '/')[1]);
 		return;		
 	}
+	// 's/old/new/'
 	if(line.at(0) == 's'){
 		vector<string> arr = split(line, '/');
-		if(arr.size() == 4){
+		if(arr.size() >= 3){
 			document.s_slech_old_new(arr[1], arr[2]);
 			return;
 		}
 	}
 	
-	
-	document.text(line);
-	//currentLine++;
+	//text
+	//document.text(line);
 	
 }
 
 
 
 
-	
+//split text by char and return a vector of words
 vector<string> Editor::split(string str, char splitBy){
 	vector<string> words;
    string word = ""; 
