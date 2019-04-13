@@ -28,8 +28,8 @@ void Editor::loop(){
 		//cout << a;
 		if (!a.compare("Q"))
 			break;
-		if(a.compare(""))
-			handle(a);
+		
+		handle(a);
 	}
 }
 
@@ -85,8 +85,13 @@ void Editor::handle(string line){
 	}
 	
 	//check if line is a "/dir"
+	if(line.size()==0){
+		document.text(line);
+		return;
+		}
+	
 	if(line.at(0) == '/'){
-		document.slesh_text(line);
+		document.slesh_text(split(line, '/')[1]);
 		return;		
 	}
 	if(line.at(0) == 's'){

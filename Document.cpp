@@ -6,19 +6,24 @@
 using namespace std;
 Document::Document(){
 	currentLine = 0;
-	addForward = false;
+	//addForward = true;
 }
 
 void Document::text(string text){
-	while(currentLine > lines.size()){
-		lines.push_back("");
-	}
+	if(!text.compare("."))
+		return;
 	//cout << "text!";
 	if(addForward){
 		vector<string>::iterator it;
 		it = lines.begin();
 		lines.insert (it+currentLine,text);
 		currentLine++;
+		
+	}
+	else{
+		vector<string>::iterator it;
+		it = lines.begin();
+		lines.insert (it+currentLine-1,text);
 		
 	}
 }
@@ -39,8 +44,7 @@ void Document::n(){
 
 
 void Document::i(){
-	addForward = true;
-	currentLine--;
+	addForward = false;
 }
 
 void Document::d(){
@@ -50,7 +54,7 @@ void Document::d(){
 
 void Document::c(){
 	d();
-	i();
+	a();
 }
 
 
@@ -60,6 +64,10 @@ void Document::a(){
 
 void Document::num(int number){
 	currentLine = number;
+	while(currentLine > lines.size()){
+		lines.push_back("");
+	}
+	cout << lines[currentLine-1] << endl;
 }
 	
 bool Document::inRange(int index){
@@ -69,18 +77,28 @@ bool Document::inRange(int index){
 }
 
 void Document::slesh_text(string text){
-	for(int i= currentLine-1; i< lines.size(); i++){
-		if(lines[i].find(text) !=  string::npos){
+	bool ok = false;
+	
+	for(int i = currentLine-1; i< lines.size(); i++){
+		size_t found = lines[i].find(text);
+		if(found !=  string::npos){
 			currentLine = i+1;
-			return;
+			ok = true;
+			break;
 		}
 	}
-	for(int i= 0; i< currentLine; i++){
-		if(lines[i].find(text) !=  string::npos){
-			currentLine = i+1;
-			return;
-		}
-	}	
+	if(!ok){
+		for(int i= 0; i< currentLine-1; i++){
+			size_t found = lines[i].find(text);
+			if(found !=  string::npos){
+				currentLine = i+1;
+				ok = true;
+			}
+		}	
+	}
+	if(ok){
+		cout << lines[currentLine-1] << endl;
+	}
 }
 
 bool Document::replace(std::string& str, const std::string& from, const std::string& to) {
