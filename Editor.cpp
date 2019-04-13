@@ -1,17 +1,25 @@
 #include <string>
 #include <iostream>
+#include <sstream>
+#include <bits/stdc++.h>
 #include "Editor.h"
+
+using namespace std;
 
 
 int main(){
 	Editor e;
 	e.loop();
-}
-
-
-Editor::Editor(): document(){
+	
+    return 0; 
 	
 }
+
+
+
+  
+
+Editor::Editor(): document(){}
 
 void Editor::loop(){
 	string a;
@@ -49,7 +57,7 @@ void Editor::handle(string line){
 		return;
 	}
 	if(!line.compare("c")){
-		//document.c(); ???
+		document.c();
 		return;
 	}
 	if(!line.compare("d")){
@@ -61,7 +69,7 @@ void Editor::handle(string line){
 	bool isAnumber;
 	string s = line;
 	try{
-		int num = stoi(s);
+		num = stoi(s);
 		isAnumber=true;
 	}
 	catch (std::invalid_argument const &e){
@@ -77,12 +85,40 @@ void Editor::handle(string line){
 	}
 	
 	//check if line is a "/dir"
+	if(line.at(0) == '/'){
+		document.slesh_text(line);
+		return;		
+	}
+	if(line.at(0) == 's'){
+		vector<string> arr = split(line, '/');
+		if(arr.size() == 4){
+			document.s_slech_old_new(arr[1], arr[2]);
+			return;
+		}
+	}
+	
 	
 	document.text(line);
 	//currentLine++;
 	
-		
-	
-	
 }
 
+
+
+
+	
+vector<string> Editor::split(string str, char splitBy){
+	vector<string> words;
+   string word = ""; 
+   for (auto x : str) { 
+       if (x == splitBy) {  
+		   words.push_back(word);
+           word = ""; 
+       } 
+       else{ 
+           word = word + x; 
+       } 
+   }  
+   words.push_back(word);
+   return words;
+} 

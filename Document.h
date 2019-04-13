@@ -9,6 +9,8 @@ class Document{
 	std::vector <string> lines;
 	int currentLine;
 	bool addForward;
+	bool addBackward;
+	bool inRange(int index);
 	
 	public:
 	void text(string text);
@@ -19,14 +21,12 @@ class Document{
 	void a();
 	void i();
 	void num(int number);
-	//void c();
+	void c();
+	void slesh_text(string text);
+	void s_slech_old_new(string oldText, string newText);
+	bool replace(std::string& str, const std::string& from, const std::string& to);
 	
 	Document();
-	//get_index();
-	string get_current_line();
-	//can i use friend?
-	void set_current_line(int i,string n);
-	
-	void delete_current_line(int i);
+
 
 };

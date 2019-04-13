@@ -6,6 +6,7 @@
 class Editor{
 	private:
 	Document document;
+	vector<string> split(string str, char splitBy);
 	void handle(string line);
 	
 	public:

@@ -9,27 +9,22 @@ Document::Document(){
 	addForward = false;
 }
 
-//Document::get_index(){return i;}
-
-string Document::get_current_line(){return lines[currentLine];}
-
-void Document::set_current_line(int i,string n){ lines[i]=n;}
-
-void Document::delete_current_line(int i){lines[i].erase();}
-
 void Document::text(string text){
+	while(currentLine > lines.size()){
+		lines.push_back("");
+	}
 	//cout << "text!";
 	if(addForward){
 		vector<string>::iterator it;
 		it = lines.begin();
 		lines.insert (it+currentLine,text);
 		currentLine++;
+		
 	}
 }
 
 void Document::p(){
-	if(currentLine > 0)
-		cout << lines[currentLine-1] << endl;
+	cout << lines[currentLine-1] << endl;
 }
 
 void Document::prec_p(){
@@ -39,14 +34,25 @@ void Document::prec_p(){
 }
 
 void Document::n(){
+	cout << currentLine << "	" << lines[currentLine-1] << endl;
 }
 
 
 void Document::i(){
+	addForward = true;
+	currentLine--;
 }
 
 void Document::d(){
+	lines.erase(lines.begin() + currentLine-1);
+	currentLine--;
 }
+
+void Document::c(){
+	d();
+	i();
+}
+
 
 void Document::a(){
 	addForward = true;
@@ -56,8 +62,38 @@ void Document::num(int number){
 	currentLine = number;
 }
 	
+bool Document::inRange(int index){
+	if(index < 0) return false;
+	if(index >= lines.size()) return false;
+	return true;
+}
+
+void Document::slesh_text(string text){
+	for(int i= currentLine-1; i< lines.size(); i++){
+		if(lines[i].find(text) !=  string::npos){
+			currentLine = i+1;
+			return;
+		}
+	}
+	for(int i= 0; i< currentLine; i++){
+		if(lines[i].find(text) !=  string::npos){
+			currentLine = i+1;
+			return;
+		}
+	}	
+}
+
+bool Document::replace(std::string& str, const std::string& from, const std::string& to) {
+    size_t start_pos = str.find(from);
+    if(start_pos == std::string::npos)
+        return false;
+    str.replace(start_pos, from.length(), to);
+    return true;
+}
 	
-	
+void Document::s_slech_old_new(string oldText, string newText){
+	replace(lines[currentLine-1], oldText, newText);
+}
 	
 	
 	
