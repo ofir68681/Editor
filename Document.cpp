@@ -101,7 +101,7 @@ void Document::slesh_text(string text){
 	}
 }
 
-bool Document::replace(std::string& str, const std::string& from, const std::string& to) {
+bool Document::replace(string& str, const string& from, const string& to) {
     size_t start_pos = str.find(from);
     if(start_pos == std::string::npos)
         return false;
