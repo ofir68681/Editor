@@ -2,8 +2,7 @@
 #include <iostream>
 #include "Document.h"
 
-/* Ofir Katz 314962101 */ 
-/* Ben Horn 208569848 */ 
+ 
 
 class Editor{
 	private:
